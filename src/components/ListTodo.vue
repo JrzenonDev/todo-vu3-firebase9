@@ -16,11 +16,5 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-
-const todos = ref([
-  { id: 1, content: 'Todo 1', done: true },
-  { id: 2, content: 'Todo 2', done: false },
-  { id: 3, content: 'Todo 3', done: false }
-])
+const { todos } = defineProps(['todos'])
 </script>
