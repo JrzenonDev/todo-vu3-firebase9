@@ -17,11 +17,7 @@ import { ref } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import ListTodo from './ListTodo.vue'
 
-const todos = ref([
-  { id: 1, content: 'Todo 1', done: true },
-  { id: 2, content: 'Todo 2', done: false },
-  { id: 3, content: 'Todo 3', done: false }
-])
+const todos = ref([])
 
 const newTodoContent = ref('')
 const addTodo = () => {
@@ -31,7 +27,7 @@ const addTodo = () => {
     content: newTodoContent.value,
     done: false
   }
-  console.log(newTodo)
-  //todos.value.unshift(newTodo)
+  todos.value.unshift(newTodo)
+  newTodoContent.value = ''
 }
 </script>
