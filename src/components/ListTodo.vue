@@ -7,7 +7,7 @@
 
           <div class="column has-text-right">
             <button class="button is-light">&check;</button>
-            <button class="button is-danger ml-1">&cross;</button>
+            <button @click="onDeleteTodo(todo.id)" class="button is-danger ml-1">&cross;</button>
           </div>
         </div>
       </div>
@@ -17,4 +17,9 @@
 
 <script setup>
 const { todos } = defineProps(['todos'])
+const emit = defineEmits(['onDeleteTodo'])
+
+const onDeleteTodo = (id) => {
+  emit('onDeleteTodo', id)
+}
 </script>

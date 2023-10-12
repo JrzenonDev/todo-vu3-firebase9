@@ -9,7 +9,7 @@
       </p>
     </div>
   </form>
-  <ListTodo :todos="todos" />
+  <ListTodo :todos="todos" @onDeleteTodo="handleDeleteTodo" />
 </template>
 
 <script setup>
@@ -20,6 +20,7 @@ import ListTodo from './ListTodo.vue'
 const todos = ref([])
 
 const newTodoContent = ref('')
+
 const addTodo = () => {
   console.log('add todo')
   const newTodo = {
@@ -29,5 +30,9 @@ const addTodo = () => {
   }
   todos.value.unshift(newTodo)
   newTodoContent.value = ''
+}
+
+const handleDeleteTodo = (id) => {
+  todos.value = todos.value.filter((todo) => todo.id !== id)
 }
 </script>
