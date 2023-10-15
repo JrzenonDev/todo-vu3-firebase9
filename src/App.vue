@@ -23,4 +23,8 @@ import ListTodo from './components/ListTodo.vue'
   padding: 20px;
   margin: 0 auto;
 }
+
+.line-through {
+  text-decoration: line-through;
+}
 </style>

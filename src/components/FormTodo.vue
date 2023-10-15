@@ -9,7 +9,7 @@
       </p>
     </div>
   </form>
-  <ListTodo :todos="todos" @onDeleteTodo="handleDeleteTodo" />
+  <ListTodo :todos="todos" @onDeleteTodo="handleDeleteTodo" @onToggleDone="handleToggleDone" />
 </template>
 
 <script setup>
@@ -22,7 +22,6 @@ const todos = ref([])
 const newTodoContent = ref('')
 
 const addTodo = () => {
-  console.log('add todo')
   const newTodo = {
     id: uuidv4(),
     content: newTodoContent.value,
@@ -34,5 +33,10 @@ const addTodo = () => {
 
 const handleDeleteTodo = (id) => {
   todos.value = todos.value.filter((todo) => todo.id !== id)
+}
+
+const handleToggleDone = (id) => {
+  const index = todos.value.findIndex((todo) => todo.id === id)
+  todos.value[index].done = !todos.value[index].done
 }
 </script>
