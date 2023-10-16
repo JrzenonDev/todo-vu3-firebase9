@@ -13,11 +13,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import ListTodo from './ListTodo.vue'
+import { collection, getDocs } from 'firebase/firestore'
+import { db } from '../hooks/firebase'
 
 const todos = ref([])
+
+onMounted(async () => {
+  console.log('mounted')
+
+  const querySnapshot = await getDocs(collection(db, 'todos'))
+  querySnapshot.forEach((doc) => {
+    console.log(doc.id, ' => ', doc.data())
+  })
+})
 
 const newTodoContent = ref('')
 
