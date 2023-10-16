@@ -16,25 +16,38 @@
 import { ref, onMounted } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import ListTodo from './ListTodo.vue'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, onSnapshot } from 'firebase/firestore'
 import { db } from '../hooks/firebase'
 
 const todos = ref([])
 
-onMounted(async () => {
-  const querySnapshot = await getDocs(collection(db, 'todos'))
+onMounted(() => {
+  // const querySnapshot = await getDocs(collection(db, 'todos'))
 
-  let fbTodos = []
+  // let fbTodos = []
 
-  querySnapshot.forEach((doc) => {
-    const todo = {
-      id: doc.id,
-      content: doc.data().content,
-      done: doc.data().done
-    }
-    fbTodos.push(todo)
+  // querySnapshot.forEach((doc) => {
+  //   const todo = {
+  //     id: doc.id,
+  //     content: doc.data().content,
+  //     done: doc.data().done
+  //   }
+  //   fbTodos.push(todo)
+  // })
+  // todos.value = fbTodos
+
+  onSnapshot(collection(db, 'todos'), (querySnapshot) => {
+    const fbTodos = []
+    querySnapshot.forEach((doc) => {
+      const todo = {
+        id: doc.id,
+        content: doc.data().content,
+        done: doc.data().done
+      }
+      fbTodos.push(todo)
+    })
+    todos.value = fbTodos
   })
-  todos.value = fbTodos
 })
 
 const newTodoContent = ref('')
