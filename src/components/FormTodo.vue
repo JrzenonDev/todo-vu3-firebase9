@@ -15,7 +15,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import ListTodo from './ListTodo.vue'
-import { addDoc, collection, onSnapshot } from 'firebase/firestore'
+import { addDoc, collection, deleteDoc, doc, onSnapshot } from 'firebase/firestore'
 import { db } from '../hooks/firebase'
 
 const todosCollectionRef = collection(db, 'todos')
@@ -48,7 +48,7 @@ const addTodo = () => {
 }
 
 const handleDeleteTodo = (id) => {
-  todos.value = todos.value.filter((todo) => todo.id !== id)
+  deleteDoc(doc(todosCollectionRef, id))
 }
 
 const handleToggleDone = (id) => {
