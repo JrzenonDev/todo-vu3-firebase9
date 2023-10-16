@@ -15,15 +15,25 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import ListTodo from './ListTodo.vue'
-import { addDoc, collection, deleteDoc, doc, onSnapshot, updateDoc } from 'firebase/firestore'
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  orderBy,
+  query,
+  updateDoc
+} from 'firebase/firestore'
 import { db } from '../hooks/firebase'
 
 const todosCollectionRef = collection(db, 'todos')
+const todosCollectionQuery = query(todosCollectionRef, orderBy('date', 'desc'))
 
 const todos = ref([])
 
 onMounted(() => {
-  onSnapshot(todosCollectionRef, (querySnapshot) => {
+  onSnapshot(todosCollectionQuery, (querySnapshot) => {
     const fbTodos = []
     querySnapshot.forEach((doc) => {
       const todo = {
@@ -42,7 +52,8 @@ const newTodoContent = ref('')
 const addTodo = () => {
   addDoc(todosCollectionRef, {
     content: newTodoContent.value,
-    done: false
+    done: false,
+    date: Date.now()
   })
   newTodoContent.value = ''
 }
