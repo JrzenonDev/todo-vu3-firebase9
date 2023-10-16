@@ -10,8 +10,6 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APPID
 }
 
-console.log('Firebase API Key:', import.meta.env.FIREBASE_APIKEY)
-
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 

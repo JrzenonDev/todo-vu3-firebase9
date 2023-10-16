@@ -22,12 +22,19 @@ import { db } from '../hooks/firebase'
 const todos = ref([])
 
 onMounted(async () => {
-  console.log('mounted')
-
   const querySnapshot = await getDocs(collection(db, 'todos'))
+
+  let fbTodos = []
+
   querySnapshot.forEach((doc) => {
-    console.log(doc.id, ' => ', doc.data())
+    const todo = {
+      id: doc.id,
+      content: doc.data().content,
+      done: doc.data().done
+    }
+    fbTodos.push(todo)
   })
+  todos.value = fbTodos
 })
 
 const newTodoContent = ref('')
